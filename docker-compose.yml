@@ -1,0 +1,44 @@
+name: Confra
+
+services:
+  # painel:
+  #   build: ./web
+  #   ports:
+  #     - 8001:8001
+  #     - 5555:5555
+  #   environment:
+  #     API_SERVER: http://10.237.4.11:8001
+  # server:
+  #   build: ./server
+  #   ports:
+  #     - 8858:8858
+  #   environment:
+  #     DATABASE_URL: postgresql://app:p4ssw0rd@database:5432/confra?schema=public
+  #     SOCKET_URL: http://10.237.0.24:3333
+  # socket:
+  #   build: ./socket
+  #   ports:
+  #     - 3333:3333
+  database:
+    image: bitnami/postgresql:15.10.0
+    restart: always
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: p4ssw0rd
+      POSTGRES_DB: confra
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - ./database/data:/bitnami/postgresql
+      - ./config:/docker-entrypoint-initdb.d
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9989:8080
