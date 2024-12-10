@@ -12,7 +12,7 @@ COPY ./drizzle ./drizzle
 COPY ./src ./src
 
 ENV NODE_ENV=production
-ENV PORT=3002
+ENV PORT=8858
 
 RUN bun build \
   --compile \
@@ -30,8 +30,8 @@ COPY --from=build /app/drizzle drizzle
 COPY --from=build /app/server server
 
 ENV NODE_ENV=production
-ENV PORT=3002
+ENV PORT=8858
 
 CMD ["./server"]
 
-EXPOSE 3002
+EXPOSE 8858

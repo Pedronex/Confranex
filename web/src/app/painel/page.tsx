@@ -39,7 +39,7 @@ export default function Home() {
       const fetchData = async () => {
         try {
           const res = await fetch(
-            `http://${window.location.hostname}:8002/lottery/painel`,
+            '/api/painel',
             {
               cache: "no-store",
             }
